@@ -39,7 +39,7 @@ public class BankingApp {
                         if(email!=null){
                             System.out.println();
                             System.out.println("User Logged In!");
-                            if(!accounts.account_exist(email)){
+                            if(accounts.account_exist(email)){
                                 System.out.println();
                                 System.out.println("1. Open a new Bank Account");
                                 System.out.println("2. Exit");

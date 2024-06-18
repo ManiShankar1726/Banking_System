@@ -4,8 +4,8 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Accounts {
-    private Connection connection;
-    private Scanner scanner;
+    private final Connection connection;
+    private final Scanner scanner;
 
     public Accounts(Connection connection, Scanner scanner) {
         this.connection = connection;
@@ -13,7 +13,7 @@ public class Accounts {
     }
 
     public long open_account(String email) {
-        if (!account_exist(email)) {
+        if (account_exist(email)) {
             String open_account_query = "INSERT INTO Accounts(account_number, full_name, email, balance, security_pin) VALUES(?, ?, ?, ?, ?)";
             scanner.nextLine();
             System.out.print("Enter Full Name: ");
@@ -82,15 +82,11 @@ public class Accounts {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return true;
-            } else {
-                return false;
-            }
+            return !resultSet.next(); //if there alredy exist account then it will return false other wise it will return true
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return true;
 
     }
 }

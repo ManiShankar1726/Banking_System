@@ -68,12 +68,7 @@ public class User {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
-                return true;
-            }
-            else{
-                return false;
-            }
+            return resultSet.next();
         }catch (SQLException e){
             e.printStackTrace();
         }
